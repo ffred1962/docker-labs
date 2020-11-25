@@ -1,0 +1,8 @@
+#!/bin/sh
+arkade install openfaas
+kubectl rollout status -n openfaas deploy/gateway
+kubectl port-forward -n openfaas svc/gateway 8080:8080 &
+export PASSWORD=$(kubectl get secret -n openfaas basic-auth -o jsonpath="{.data.basic-auth-password}" | base64 --decode; echo)
+sleep 5
+echo -n $PASSWORD | faas-cli login --username admin --password-stdin
+

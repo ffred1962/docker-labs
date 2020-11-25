@@ -1,0 +1,14 @@
+version: 1.0
+provider:
+  name: openfaas
+  gateway: http://127.0.0.1:8080
+functions:
+  bw-api-protected:
+    lang: python3-http-debian
+    handler: ./bw-api-protected
+    image: freddykr/bw-api-protected:latest
+environment:
+     RAW_BODY: True
+secrets:
+  - bw-api-key
+
